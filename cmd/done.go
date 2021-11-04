@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
+	"github.com/lmagdanello/tasks/db"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +22,25 @@ var doneCmd = &cobra.Command{
 				idList = append(idList, id)
 			}
 		}
-		fmt.Println(idList)
+
+		tasks, err := db.AllTasks()
+		if err != nil {
+			log.Println("Something went wrong: ", err)
+			return
+		}
+		for _, id := range idList {
+			if id <= 0 || id > len(tasks) {
+				fmt.Println("Invalid task ID: ", id)
+				continue
+			}
+			task := tasks[id-1]
+			err := db.DeleteTask(task.Key)
+			if err != nil {
+				fmt.Printf("Failed to delete task: \"%d\". Error: %s\n", id, err)
+			} else {
+				fmt.Printf("Task \"%d\" completed\n", id)
+			}
+		}
 	},
 }
 
