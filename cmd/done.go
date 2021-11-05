@@ -23,7 +23,7 @@ var doneCmd = &cobra.Command{
 			}
 		}
 
-		tasks, err := db.AllTasks()
+		tasks, err := db.AllTasks([]byte("tasks"))
 		if err != nil {
 			log.Println("Something went wrong: ", err)
 			return
