@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"log"
+	"os"
 	"path/filepath"
 
 	"github.com/lmagdanello/tasks/db"
@@ -10,7 +11,12 @@ import (
 
 func chooseBucket(bucketName []byte) []byte {
 	home, _ := homedir.Dir()
-	dbPath := filepath.Join(home, string(bucketName)+".db")
+	path := filepath.Join(home, ".tasks")
+	dbPath := filepath.Join(path, string(bucketName)+".db")
+	if err := os.Mkdir(path, 0777); err != nil && !os.IsExist(err) {
+		log.Fatal(err)
+	}
+
 	err := db.Init(dbPath, bucketName)
 	if err != nil {
 		log.Println("Something went wrong with your bucket:", err.Error())
