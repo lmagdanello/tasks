@@ -9,6 +9,7 @@ import (
 	"github.com/mitchellh/go-homedir"
 )
 
+// chooseBucket already init the bucket (*.db inside HOMEDIR/.tasks)
 func chooseBucket(bucketName []byte) []byte {
 	home, _ := homedir.Dir()
 	path := filepath.Join(home, ".tasks")
@@ -26,6 +27,6 @@ func chooseBucket(bucketName []byte) []byte {
 }
 
 // function removeBucket
-// remove bucket from dbPath (remove .db files)
+// remove bucket from (AKA remove .db files)
 //
 //
