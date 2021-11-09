@@ -2,6 +2,8 @@ package db
 
 import (
 	"encoding/binary"
+	"fmt"
+	"log"
 	"time"
 
 	"github.com/boltdb/bolt"
@@ -14,16 +16,28 @@ type Task struct {
 	Value string
 }
 
-func Init(dbPath string, bucketName []byte) error {
+func Create(dbPath string, bucketName []byte) error {
 	var err error
-	db, err = bolt.Open(dbPath, 0600, &bolt.Options{Timeout: 1 * time.Second})
+	db, err = Init(dbPath)
 	if err != nil {
+		log.Println("Bucket failed: ", string(bucketName))
 		return err
 	}
+
 	return db.Update(func(tx *bolt.Tx) error {
 		_, err := tx.CreateBucketIfNotExists(bucketName)
 		return err
 	})
+}
+
+func Init(dbPath string) (*bolt.DB, error) {
+	var err error
+	db, err = bolt.Open(dbPath, 0600, &bolt.Options{Timeout: 1 * time.Second})
+	if err != nil {
+		fmt.Println("Error opening the bucket: \n", err)
+	}
+
+	return db, err
 }
 
 func CreateTask(task string, bucketName []byte) (int, error) {

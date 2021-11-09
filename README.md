@@ -19,12 +19,14 @@ Flags:
 
 Use "tasks [command] --help" for more information about a command.
 ```
+----
 
-- [ ] function chooseBucket should just choose the bucket and not init a new bucket (db file);
+- [X] function chooseBucket should just choose the bucket and not init a new bucket (db file);
 - [ ] rm command to remove the tasks and not complete;
 - [ ] done cmd tuning (add status to struct (like COMPLETE and PENDING for each task)).
 - [ ] personalize help;
 - [ ] all functions show which bucket you are currently working on;
 - [ ] improve logging errors;
+- [ ] all functions missing args drops the help menu
 
 :)
