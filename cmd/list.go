@@ -15,6 +15,8 @@ var listCmd = &cobra.Command{
 	Short: "List tasks",
 	Run: func(cmd *cobra.Command, args []string) {
 		bucket, _ := cmd.Flags().GetString("bucket")
+		green := ansi.ColorFunc("green+")
+
 		if bucket != "" {
 			bucketName := chooseBucket([]byte(bucket))
 			tasks, err := db.AllTasks(bucketName)
@@ -23,10 +25,10 @@ var listCmd = &cobra.Command{
 				os.Exit(1)
 			}
 			if len(tasks) == 0 {
+				fmt.Printf("Bucket: "+green("%v\n"), bucket)
 				fmt.Println("You have no tasks!")
 				return
 			}
-			green := ansi.ColorFunc("green+")
 			fmt.Printf("Bucket: "+green("%v\n"), bucket)
 			fmt.Println("List tasks:")
 			for i, task := range tasks {

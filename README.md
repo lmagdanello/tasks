@@ -43,6 +43,7 @@ Use "tasks [command] --help" for more information about a command.
 Bucket "github" created with success!
 
  ~  tasks list --bucket github
+Bucket: github
 You have no tasks!
 
  ~  tasks add --bucket github "New Task"
