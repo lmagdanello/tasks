@@ -68,4 +68,7 @@ Bucket: github
 List tasks:
 1. Second Task
 ```
+
+Still working on the project, feel free to contribute or clone!
+
 ----
