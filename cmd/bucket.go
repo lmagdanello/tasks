@@ -45,4 +45,5 @@ func chooseBucket(bucketName []byte) []byte {
 	}
 
 	return bucketName
+
 }

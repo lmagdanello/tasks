@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/lmagdanello/tasks/db"
+	"github.com/mgutz/ansi"
 	"github.com/spf13/cobra"
 )
 
@@ -25,6 +26,8 @@ var listCmd = &cobra.Command{
 				fmt.Println("You have no tasks!")
 				return
 			}
+			green := ansi.ColorFunc("green+")
+			fmt.Printf("Bucket: "+green("%v\n"), bucket)
 			fmt.Println("List tasks:")
 			for i, task := range tasks {
 				fmt.Printf("%d. %s\n", i+1, task.Value)

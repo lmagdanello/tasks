@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/lmagdanello/tasks/db"
+	"github.com/mgutz/ansi"
 	"github.com/spf13/cobra"
 )
 
@@ -15,11 +16,13 @@ var doneCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		var idList []int
 		bucket, _ := cmd.Flags().GetString("bucket")
+		green := ansi.ColorFunc("green+")
 		if bucket != "" {
 			bucketName := chooseBucket([]byte(bucket))
 			for _, arg := range args {
 				id, err := strconv.Atoi(arg)
 				if err != nil {
+					fmt.Printf("Bucket: "+green("%v\n"), bucket)
 					fmt.Println("Failed to parse the argument:", arg)
 				} else {
 					idList = append(idList, id)
@@ -32,6 +35,7 @@ var doneCmd = &cobra.Command{
 			}
 			for _, id := range idList {
 				if id <= 0 || id > len(tasks) {
+					fmt.Printf("Bucket: "+green("%v\n"), bucket)
 					fmt.Println("Invalid task ID: ", id)
 					continue
 				}
@@ -40,7 +44,8 @@ var doneCmd = &cobra.Command{
 				if err != nil {
 					fmt.Printf("Failed to delete task: \"%d\". Error: %s\n", id, err)
 				} else {
-					fmt.Printf("Task \"%d\" completed\n", id)
+					fmt.Printf("Bucket: "+green("%v\n"), bucket)
+					fmt.Printf("Task \"%d\" completed!\n", id)
 				}
 			}
 		} else {

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/lmagdanello/tasks/db"
+	"github.com/mgutz/ansi"
 	"github.com/spf13/cobra"
 )
 
@@ -14,6 +15,8 @@ var addCmd = &cobra.Command{
 	Short: "Add a new task to your task list",
 	Run: func(cmd *cobra.Command, args []string) {
 		bucket, _ := cmd.Flags().GetString("bucket")
+		green := ansi.ColorFunc("green+")
+
 		if bucket != "" {
 			bucketName := chooseBucket([]byte(bucket))
 			task := strings.Join(args, " ")
@@ -22,8 +25,8 @@ var addCmd = &cobra.Command{
 				log.Println("Something went wrong creating task:", err.Error())
 				return
 			}
-
-			fmt.Printf("Added \"%s\" to your task list\n", task)
+			fmt.Printf("Bucket: "+green("%v\n"), bucket)
+			fmt.Printf("Added \"%s\" to your task list!\n", task)
 		} else {
 			log.Println("Choose a bucket dumbass!")
 

@@ -19,7 +19,7 @@ var initCmd = &cobra.Command{
 			}
 			fmt.Printf("Bucket \"%s\" created with success!\n", bucket)
 		} else {
-			fmt.Println("Choose a bucket!!!!!")
+			fmt.Println("Choose a bucket!")
 		}
 	},
 }
