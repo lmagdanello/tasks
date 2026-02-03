@@ -1,0 +1,4 @@
+/tasks
+*.exe
+coverage.out
+*.db
